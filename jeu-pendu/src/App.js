@@ -12,6 +12,8 @@ class App extends Component{
         motActuel: this.generatedMot(),
         nbreEssai: 0,
         lettreChoisi: '',
+        lettreUtilise : new Set(),
+        etatMot : this.computeDisplay ,
     }
 
     generatedMot() {
@@ -19,21 +21,40 @@ class App extends Component{
         return tabMots[index];
     }
 
-    computeDisplay = function (phrase, usedLetters) {
-        return phrase.replace(/\w/g, (letter) => (usedLetters.has(letter) ? letter : '_'))
+
+    computeDisplay(motActuel, lettreUtilise) {
+        return motActuel.replace(/\w/g, (lettre) => (lettreUtilise.has(lettreUtilise) ? lettre : '_'))
+    }
+
+    restart(){
+        let {motActuel,  nbreEssai, lettreChoisi, lettreUtilise, etatMot}= this.state
+        motActuel = this.generatedMot()
+        nbreEssai = 0
+        lettreChoisi = ''
+        lettreUtilise = new Set()
+        etatMot = this.computeDisplay
+        this.setState({motActuel, nbreEssai ,lettreChoisi, lettreUtilise, etatMot})
     }
 
     handleLettre (lettre) {
-        let {motActuel , nbreEssai, lettreChoisi} = this.state
+        let {motActuel , nbreEssai, lettreChoisi, lettreUtilise, etatMot} = this.state
         lettreChoisi = lettre
-        this.setState({motActuel, nbreEssai, lettreChoisi})
+        nbreEssai ++
+        lettreUtilise.add(lettreChoisi)
+        etatMot = this.computeDisplay(motActuel, lettreUtilise)
+        this.setState({motActuel, nbreEssai, lettreChoisi, lettreUtilise, etatMot})
     }
 
+
     render() {
-        const { motActuel, nbreEssai, lettreChoisi} = this.state
+        const { motActuel, nbreEssai, lettreChoisi, lettreUtilise, etatMot} = this.state
         return (
             <div className="pendu">
+                <button onClick={() => this.restart()}>Recommencer</button>
+                <p>{lettreUtilise}</p>
                 <NbreEssais nbreEssai={nbreEssai}/>
+                <p className="display">{etatMot}</p>
+                <p>{motActuel}</p>
                 <div>Lettre cliqué : {lettreChoisi}</div>
                 <p className="lettres">
                     {LETTRES.map((lettre) => (
