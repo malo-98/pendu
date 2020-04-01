@@ -49,30 +49,30 @@ body {
   cursor: not-allowed;
 }
 
-/*.hangman.won .display {
+pendu.won .display {
   color: green;
 }
 
-.hangman.won .letters {
+.pendu.won .lettres {
   justify-content: space-around;
 }
 
-.hangman.won .letters button:not(.replay) {
+.pendu.won .lettres button:not(.replay) {
   border-color: #dfd;
   color: #dfd;
   cursor: not-allowed;
 }
 
-.hangman.won .letters button.replay {
+.pendu.won .lettres button.replay {
   width: auto;
   border-color: green;
   color: green;
   padding: 0.2em 1em;
 }
 
-.hangman.won .letters button.replay:hover,
-.hangman.won .letters button.replay:active {
+.pendu.won .lettres button.replay:hover,
+.pendu.won .lettres button.replay:active {
   color: white;
   background: green;
-}*/
+}
 
